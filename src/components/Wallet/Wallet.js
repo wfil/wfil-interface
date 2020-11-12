@@ -37,7 +37,7 @@ const WalletBoddy = styled.div`
   overflow: hidden;
   transition: max-height 0.3s;
   background-color: white;
-  max-height: ${({isOpen}) => isOpen ? '412px' : 0};
+  max-height: ${({isOpen}) => isOpen ? '500px' : 0};
 `;
 
 const WalletSection = styled(Box)`
@@ -47,6 +47,10 @@ const WalletSection = styled(Box)`
   &:last-child {
     border: none;
   }
+`;
+
+const LinkAction = styled(Text)`
+  cursor: pointer;
 `;
 
 let intervalHandler;
@@ -91,6 +95,12 @@ const Wallet = () => {
     const { success } = await sendFil(wallet.address, destination, amount);
     setSendFilSuccess(success);
     setSendFilData(defaultSendFilData);
+  }
+
+  const handleResetWallet = () => {
+    intervalHandler && clearInterval(intervalHandler);
+    saveWallet(null);
+    setWallet(null);
   }
 
   return (
@@ -173,6 +183,9 @@ const Wallet = () => {
                 </Box>
                 <Box px={4}>
                   <Button onClick={handleSendFil} width="100%">SEND</Button>
+                </Box>
+                <Box px={4} mb={2} mt={4}>
+                  <LinkAction textAlign="center" fontFamily="sansSerif" fontSize={1} onClick={handleResetWallet}>reset wallet</LinkAction>
                 </Box>
               </WalletSection>
             </WalletBoddy>
