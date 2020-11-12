@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Filecoin = () => {
+const Filecoin = ({ width = '50px', height = '50px' }) => {
   return (
-    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 40 40" enableBackground="new 0 0 40 40">
+    <svg width={width} height={height} version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" x="0" y="0" viewBox="0 0 40 40" enableBackground="new 0 0 40 40">
       <style dangerouslySetInnerHTML={{ __html: `.st1-logo {
           fill-rule: evenodd;
           clip-rule: evenodd;

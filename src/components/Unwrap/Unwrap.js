@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Flex, Box, Card, Heading, Field, Text, Input, Button, Modal, Loader } from 'rimble-ui';
+import { Flex, Box, Card, Heading, Text, Input, Button, Modal, Loader } from 'rimble-ui';
 
 import { checkTransactionStatus, askForUnwrap } from '../../services/api';
 import { sendUnwrapTransaction } from '../../services/web3';
 import { getWallet } from '../Wallet/db';
+import { ReactComponent as Logo } from '../Icon/logo.svg';
 
 const INTERVAL_CHECK = 5000;
 let intervalHandler = null;
@@ -18,11 +19,13 @@ const TX_STATUSES = {
 
 const SetInputValue = styled.a`
   position: absolute;
-  top: 12px;
+  top: 10px;
   right: 0;
   text-decoration: none;
   color: ${props => props.theme.colors.primary};
   cursor: pointer;
+  font-family: sans-serif;
+  font-size: .8rem;
 `;
 
 const Unwrap = () => {
@@ -92,36 +95,40 @@ const Unwrap = () => {
   return (
     <>
       <Flex flexDirection="column" alignItems="stretch" py={4}>
-      <Box px={4} mb={2}>
-          <Field position="relative" label="Unwrap Amount" fontFamily="sansSerif" width="100%" color="primary">
-            <Input
-              name="amount"
-              onChange={onWrapValueChange}
-              placeholder="Amount of WFIL to unwrap"
-              required={true}
-              type="number"
-              value={formData.amount}
-              width="100%"
-            />
-            <SetInputValue onClick={handleUseMaxWFilValue}>max</SetInputValue>
-          </Field>
+        <Box position="relative" mx={4} mb={3}>
+          <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">Unwrap Amount</Text>
+          <Input
+            name="amount"
+            onChange={onWrapValueChange}
+            placeholder="Amount of WFIL to unwrap"
+            required={true}
+            type="number"
+            value={formData.amount}
+            width="100%"
+          />
+          <Box position="absolute" top="30px" right="0">
+            <Flex alignItems="center" justifyContent="flex-end">
+              <Logo style={{ width: '35px', height: '35px' }} />
+              <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary" ml="5px">WFIL</Text>
+            </Flex>
+          </Box>
+          <SetInputValue onClick={handleUseMaxWFilValue}>max</SetInputValue>
         </Box>
-        <Box px={4} mb={2}>
-          <Field position="relative" label="FIL Address" fontFamily="sansSerif" width="100%" color="primary">
-            <Input
-              name="destination"
-              onChange={onWrapValueChange}
-              placeholder="e.g. t3sajrvgya262eypuvzdbfc4n2me..."
-              required={true}
-              type="text"
-              value={formData.destination}
-              width="100%"
-            />
-            <SetInputValue onClick={handleUseFilWallet}>wallet</SetInputValue>
-          </Field>
+        <Box position="relative" mx={4} mb={4}>
+          <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">FIL Address</Text>
+          <Input
+            name="destination"
+            onChange={onWrapValueChange}
+            placeholder="e.g. t3sajrvgya262eypuvzdbfc4n2me..."
+            required={true}
+            type="text"
+            value={formData.destination}
+            width="100%"
+          />
+          <SetInputValue onClick={handleUseFilWallet}>use wallet</SetInputValue>
         </Box>
         <Box px={4}>
-          <Button onClick={handleUnWrap} width="100%">UNWRAP</Button>
+          <Button onClick={handleUnWrap} width="100%">GET FIL</Button>
         </Box>
       </Flex>
       <Modal isOpen={modalOpen}>

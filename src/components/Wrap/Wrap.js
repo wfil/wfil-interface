@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Flex, Box, Card, Heading, Field, Text, Icon, Input, Button, Modal, Loader } from 'rimble-ui';
+import { Flex, Box, Card, Heading, Text, Icon, Input, Button, Modal, Loader } from 'rimble-ui';
 
+import AppIcon from '../Icon';
 import { friendlyAmount } from '../../helpers/filecoin';
 import { askForWrap, checkTransactionStatus } from '../../services/api';
 import Clipboard from '../../utilities/components/CopyToClipboard';
@@ -18,12 +19,15 @@ const AppLink = styled.a`
 
 const SetInputValue = styled.a`
   position: absolute;
-  top: 12px;
+  top: 10px;
   right: 0;
   text-decoration: none;
   color: ${props => props.theme.colors.primary};
   cursor: pointer;
+  font-family: sans-serif;
+  font-size: .8rem;
 `;
+
 
 const Wrap = () => {
   const { account } = useSelector(state => state.web3)
@@ -89,50 +93,53 @@ const Wrap = () => {
   return (
     <>
       <Flex flexDirection="column" alignItems="stretch" py={4}>
-        <Box px={4} mb={1}>
-          <Field position="relative" label="Wrap Amount" fontFamily="sansSerif" width="100%" color="primary">
-            <Input
-              name="amount"
-              onChange={onWrapValueChange}
-              placeholder="Amount of FIL to wrap"
-              required={true}
-              type="number"
-              value={formData.amount}
-              width="100%"
-            />
-            <SetInputValue onClick={handleUseMaxFilValue}>max</SetInputValue>
-          </Field>
+        <Box position="relative" mx={4} mb={3}>
+          <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">Wrap Amount</Text>
+          <Input
+            name="amount"
+            onChange={onWrapValueChange}
+            placeholder="Amount of FIL to wrap"
+            required={true}
+            type="number"
+            value={formData.amount}
+            width="100%"
+          />
+          <Box position="absolute" top="33px" right="0">
+            <Flex alignItems="center" justifyContent="flex-end">
+              <AppIcon name="filecoin" width="30px" height="30px" />
+              <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary" ml="5px">FIL</Text>
+            </Flex>
+          </Box>
+          <SetInputValue onClick={handleUseMaxFilValue}>max</SetInputValue>
         </Box>
-        <Box px={4} mb={1}>
-          <Field position="relative" label="Ethereum destination address" fontFamily="sansSerif" width="100%" color="primary">
-            <Input
-              name="destination"
-              onChange={onWrapValueChange}
-              placeholder="e.g. 0xE24904d381D075cf0c8912Bc3..."
-              required={true}
-              type="text"
-              value={formData.destination}
-              width="100%"
-            />
-            <SetInputValue onClick={handleUseEthWallet}>wallet</SetInputValue>
-          </Field>
+        <Box position="relative" mx={4} mb={3}>
+          <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">Ethereum destination address</Text>
+          <Input
+            name="destination"
+            onChange={onWrapValueChange}
+            placeholder="e.g. 0xE24904d381D075cf0c8912Bc3..."
+            required={true}
+            type="text"
+            value={formData.destination}
+            width="100%"
+          />
+          <SetInputValue onClick={handleUseEthWallet}>use wallet</SetInputValue>
         </Box>
-        <Box px={4} mb={2}>
-          <Field position="relative"  label="Filecoin Sending Address" fontFamily="sansSerif" width="100%" color="primary">
-            <Input
-              name="origin"
-              onChange={onWrapValueChange}
-              placeholder="e.g. t3sajrvgya262eypuvzdbfc4n2me..."
-              required={true}
-              type="text"
-              value={formData.origin}
-              width="100%"
-            />
-            <SetInputValue onClick={handleUseFilWallet}>wallet</SetInputValue>
-          </Field>
+        <Box position="relative" mx={4} mb={4}>
+          <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">Filecoin Sending Address</Text>
+          <Input
+            name="origin"
+            onChange={onWrapValueChange}
+            placeholder="e.g. t3sajrvgya262eypuvzdbfc4n2me..."
+            required={true}
+            type="text"
+            value={formData.origin}
+            width="100%"
+          />
+          <SetInputValue onClick={handleUseFilWallet}>use wallet</SetInputValue>
         </Box>
         <Box px={4}>
-          <Button onClick={handleWrap} width="100%">WRAP</Button>
+          <Button onClick={handleWrap} width="100%">GET WFIL</Button>
         </Box>
       </Flex>
       <Modal isOpen={modalOpen}>

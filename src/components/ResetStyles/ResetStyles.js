@@ -52,6 +52,12 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+-moz-appearance: textfield;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 `
 
 export const Reset = createGlobalStyle`${reset}`

@@ -5,9 +5,9 @@ const icons = {
   filecoin: Filecoin
 }
 
-const Icon = ({ name }) => {
+const Icon = ({ name, ...rest }) => {
   const IconComponent = icons[name];
-  return <IconComponent />;
+  return <IconComponent {...rest} />;
 }
  
 export default Icon;
