@@ -32,7 +32,7 @@ const App = () => {
       getTokenSupply(),
       getNetwork()
     ])
-    dispatch(setTotalSupply(totalSupply));
+    dispatch(setTotalSupply(parseFloat(totalSupply).toFixed(4)));
     dispatch(setNetwork(network));
     if (isConnected()) {
       const account = getUserAccount();
@@ -43,7 +43,7 @@ const App = () => {
   
   const registerUserTokenBalance = async (account) => {
     const balance = await getUserTokenBalance(account);
-    dispatch(setUserTokenBalance(balance));
+    dispatch(setUserTokenBalance(parseFloat(balance).toFixed(4)));
   }
 
   const registerAccount = (accounts) => {
