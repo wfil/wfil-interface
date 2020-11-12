@@ -95,7 +95,7 @@ const Unwrap = () => {
   return (
     <>
       <Flex flexDirection="column" alignItems="stretch" py={4}>
-        <Box position="relative" mx={4} mb={3}>
+        <Box position="relative" mx={4} mb={4}>
           <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">Unwrap Amount</Text>
           <Input
             name="amount"
@@ -115,7 +115,7 @@ const Unwrap = () => {
           <SetInputValue onClick={handleUseMaxWFilValue}>max</SetInputValue>
         </Box>
         <Box position="relative" mx={4} mb={4}>
-          <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">FIL Address</Text>
+          <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">Filecoin Receiving Address</Text>
           <Input
             name="destination"
             onChange={onWrapValueChange}

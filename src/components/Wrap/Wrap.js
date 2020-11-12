@@ -93,7 +93,7 @@ const Wrap = () => {
   return (
     <>
       <Flex flexDirection="column" alignItems="stretch" py={4}>
-        <Box position="relative" mx={4} mb={3}>
+        <Box position="relative" mx={4} mb={4}>
           <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">Wrap Amount</Text>
           <Input
             name="amount"
@@ -112,19 +112,6 @@ const Wrap = () => {
           </Box>
           <SetInputValue onClick={handleUseMaxFilValue}>max</SetInputValue>
         </Box>
-        <Box position="relative" mx={4} mb={3}>
-          <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">Ethereum destination address</Text>
-          <Input
-            name="destination"
-            onChange={onWrapValueChange}
-            placeholder="e.g. 0xE24904d381D075cf0c8912Bc3..."
-            required={true}
-            type="text"
-            value={formData.destination}
-            width="100%"
-          />
-          <SetInputValue onClick={handleUseEthWallet}>use wallet</SetInputValue>
-        </Box>
         <Box position="relative" mx={4} mb={4}>
           <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">Filecoin Sending Address</Text>
           <Input
@@ -137,6 +124,19 @@ const Wrap = () => {
             width="100%"
           />
           <SetInputValue onClick={handleUseFilWallet}>use wallet</SetInputValue>
+        </Box>
+        <Box position="relative" mx={4} mb={4}>
+          <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">Ethereum Destination Address</Text>
+          <Input
+            name="destination"
+            onChange={onWrapValueChange}
+            placeholder="e.g. 0xE24904d381D075cf0c8912Bc3..."
+            required={true}
+            type="text"
+            value={formData.destination}
+            width="100%"
+          />
+          <SetInputValue onClick={handleUseEthWallet}>use wallet</SetInputValue>
         </Box>
         <Box px={4}>
           <Button onClick={handleWrap} width="100%">GET WFIL</Button>
