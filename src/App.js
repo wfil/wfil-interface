@@ -11,7 +11,8 @@ import {
   setNetwork,
   setTotalSupply,
   setAccount,
-  setUserTokenBalance
+  setUserTokenBalance,
+  setCurrentFee
 } from './redux/actions/web3';
 import {
   getTokenSupply,
@@ -19,7 +20,8 @@ import {
   setupEventHandlers,
   isConnected,
   getUserAccount,
-  getUserTokenBalance
+  getUserTokenBalance,
+  getCurrentFee
 } from './services/web3';
 
 const appTheme = { ...theme, ...customTheme };
@@ -28,12 +30,14 @@ const App = () => {
   const dispatch = useDispatch();
 
   const initWeb3 = async () => {
-    const [totalSupply, network] = await Promise.all([
+    const [totalSupply, network, fee] = await Promise.all([
       getTokenSupply(),
-      getNetwork()
+      getNetwork(),
+      getCurrentFee()
     ])
     dispatch(setTotalSupply(parseFloat(totalSupply).toFixed(4)));
     dispatch(setNetwork(network));
+    dispatch(setCurrentFee(fee));
     if (isConnected()) {
       const account = getUserAccount();
       dispatch(setAccount(account));

@@ -62,6 +62,17 @@ export async function getUserTokenBalance(account) {
   }
 }
 
+export async function getCurrentFee() {
+  try {
+    const contract = await getContract();
+    const result = await contract.methods.fee().call();
+    return result;
+  } catch (error) {
+    console.log("getTokenUserbalance -> error", error)
+    return 0;
+  }
+}
+
 export const requiredNetwork = getNetworkById(REQUIRED_NETWORK);
 
 export const getNetwork = async () => {

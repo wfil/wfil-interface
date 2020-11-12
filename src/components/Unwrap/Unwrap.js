@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Flex, Box, Card, Heading, Text, Input, Button, Modal, Loader } from 'rimble-ui';
@@ -28,6 +28,8 @@ const SetInputValue = styled.a`
   font-size: .8rem;
 `;
 
+const FEE_ROUND_DIGITS = 6;
+
 const Unwrap = () => {
   const lsWallet = getWallet();
   const address = lsWallet?.address ?? '';
@@ -35,7 +37,13 @@ const Unwrap = () => {
   const [formData, setFormData] = useState({ amount: '', destination: address});
   const [success, setSuccess] = useState(false);
   const [txStatus, setTxStatus] = useState('');
-  const { account, userBalance } = useSelector(state => state.web3);
+  const { account, userBalance, currentFee } = useSelector(state => state.web3);
+  const [feeAmount, setFeeAmount] = useState(0);
+
+  useEffect(() => {
+    const feeAbs = currentFee / 100;
+    setFeeAmount((feeAbs * formData.amount).toFixed(FEE_ROUND_DIGITS));
+  }, [formData.amount]);
 
   const onWrapValueChange = ({ target }) => {
     const { name, value } = target;
@@ -126,6 +134,14 @@ const Unwrap = () => {
             width="100%"
           />
           <SetInputValue onClick={handleUseFilWallet}>use wallet</SetInputValue>
+        </Box>
+        <Box position="relative" mx={4} mb={4}>
+          <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">
+            Fee ({currentFee}%): {feeAmount > 0 ? `${feeAmount} FIL` : '-'}
+          </Text>
+          <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">
+            You Will Receive: {feeAmount > 0 ? `${(formData.amount - feeAmount).toFixed(FEE_ROUND_DIGITS)} FIL` : '-'}
+          </Text>
         </Box>
         <Box px={4}>
           <Button onClick={handleUnWrap} width="100%">GET FIL</Button>

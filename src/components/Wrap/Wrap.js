@@ -28,15 +28,22 @@ const SetInputValue = styled.a`
   font-size: .8rem;
 `;
 
+const FEE_ROUND_DIGITS = 6;
 
 const Wrap = () => {
-  const { account } = useSelector(state => state.web3)
+  const { account, currentFee } = useSelector(state => state.web3)
   const lsWallet = getWallet();
   const address = lsWallet?.address ?? '';
   const filBalance = friendlyAmount(lsWallet?.balance ?? 0);
   const [modalOpen, setModalOpen] = useState(false)
   const [txResult, setTxResult] = useState('')
   const [formData, setFormData] = useState({ amount: '', destination: '', origin: address });
+  const [feeAmount, setFeeAmount] = useState(0);
+
+  useEffect(() => {
+    const feeAbs = currentFee / 100;
+    setFeeAmount((feeAbs * formData.amount).toFixed(FEE_ROUND_DIGITS));
+  }, [formData.amount]);
 
   useEffect(() => {
     return () => intervalHandler && clearInterval(intervalHandler);
@@ -137,6 +144,14 @@ const Wrap = () => {
             width="100%"
           />
           <SetInputValue onClick={handleUseEthWallet}>use wallet</SetInputValue>
+        </Box>
+        <Box position="relative" mx={4} mb={4}>
+          <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">
+            Fee ({currentFee}%): {feeAmount > 0 ? `${feeAmount} WFIL` : '-'}
+          </Text>
+          <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">
+            You Will Receive: {feeAmount > 0 ? `${(formData.amount - feeAmount).toFixed(FEE_ROUND_DIGITS)} WFIL` : '-'}
+          </Text>
         </Box>
         <Box px={4}>
           <Button onClick={handleWrap} width="100%">GET WFIL</Button>

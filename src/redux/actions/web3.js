@@ -2,6 +2,7 @@ export const SET_NETWORK = 'SET_NETWORK';
 export const SET_TOTAL_SUPPLY = 'SET_TOTAL_SUPPLY';
 export const SET_ACCOUNT = 'SET_ACCOUNT';
 export const SET_USER_TOKEN_BALANCE = 'SET_USER_TOKEN_BALANCE';
+export const SET_CURRENT_FEE = 'SET_CURRENT_FEE';
 
 export const setNetwork = (network) => {
   return { type: SET_NETWORK, payload: network };
@@ -17,4 +18,8 @@ export const setAccount = (account) => {
 
 export const setUserTokenBalance = (balance) => {
   return { type: SET_USER_TOKEN_BALANCE, payload: balance };
+}
+
+export const setCurrentFee = (fee) => {
+  return { type: SET_CURRENT_FEE, payload: fee };
 }
