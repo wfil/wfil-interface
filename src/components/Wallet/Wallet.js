@@ -64,8 +64,8 @@ const Wallet = () => {
   const [sendFilData, setSendFilData] = useState(defaultSendFilData);
   const [sendFilSuccess, setSendFilSuccess] = useState(false);
 
-  const updateWalletBalance = async (address) => {
-    const { success, data: balance } = await getBalance(address);
+  const updateWalletBalance = async (wallet) => {
+    const { success, data: balance } = await getBalance(wallet.address);
     if (success){
       setWallet(wallet => ({ ...wallet, balance }))
       saveWallet({ ...wallet, balance });
@@ -75,7 +75,7 @@ const Wallet = () => {
   useEffect(() => {
     if (wallet) {
       updateWalletBalance(wallet.address);
-      intervalHandler = setInterval(() => updateWalletBalance(wallet.address), CHECK_BALANCE_INTERVAL);
+      intervalHandler = setInterval(() => updateWalletBalance(wallet), CHECK_BALANCE_INTERVAL);
     }
     return () => intervalHandler && clearInterval(intervalHandler);
   }, []);
@@ -85,7 +85,7 @@ const Wallet = () => {
     if (success) {
       saveWallet(data);
       setWallet(data);
-      intervalHandler = setInterval(() => updateWalletBalance(data.address), CHECK_BALANCE_INTERVAL);
+      intervalHandler = setInterval(() => updateWalletBalance(data), CHECK_BALANCE_INTERVAL);
     }
   }
 
@@ -98,6 +98,7 @@ const Wallet = () => {
   }
 
   const handleResetWallet = () => {
+    console.log("handleResetWal -> handleResetWallet")
     intervalHandler && clearInterval(intervalHandler);
     saveWallet(null);
     setWallet(null);

@@ -1,4 +1,4 @@
-const LOCAL_STORAGE_KEY = 'wfil_wallet_v0.1';
+const LOCAL_STORAGE_KEY = 'wfil_wallet_v0_1';
 
 export function getWallet() {
   const lsData = window.localStorage.getItem(LOCAL_STORAGE_KEY);
