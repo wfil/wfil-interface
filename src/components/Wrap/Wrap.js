@@ -28,7 +28,7 @@ const SetInputValue = styled.a`
   font-size: .8rem;
 `;
 
-const FEE_ROUND_DIGITS = 6;
+const ROUND_DECIMALS = process.env.REACT_APP_ROUND_DECIMALS
 
 const Wrap = () => {
   const { account, currentFee } = useSelector(state => state.web3)
@@ -42,7 +42,7 @@ const Wrap = () => {
 
   useEffect(() => {
     const feeAbs = currentFee / 100;
-    setFeeAmount((feeAbs * formData.amount).toFixed(FEE_ROUND_DIGITS));
+    setFeeAmount((feeAbs * formData.amount).toFixed(ROUND_DECIMALS));
   }, [formData.amount]);
 
   useEffect(() => {
@@ -150,7 +150,7 @@ const Wrap = () => {
             Fee ({currentFee}%): {feeAmount > 0 ? `${feeAmount} WFIL` : '-'}
           </Text>
           <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">
-            You Will Receive: {feeAmount > 0 ? `${(formData.amount - feeAmount).toFixed(FEE_ROUND_DIGITS)} WFIL` : '-'}
+            You Will Receive: {feeAmount > 0 ? `${(formData.amount - feeAmount).toFixed(ROUND_DECIMALS)} WFIL` : '-'}
           </Text>
         </Box>
         <Box px={4}>

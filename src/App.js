@@ -25,6 +25,7 @@ import {
 } from './services/web3';
 
 const appTheme = { ...theme, ...customTheme };
+const ROUND_DECIMALS = process.env.REACT_APP_ROUND_DECIMALS
 
 const App = () => {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ const App = () => {
       getNetwork(),
       getCurrentFee()
     ])
-    dispatch(setTotalSupply(parseFloat(totalSupply).toFixed(4)));
+    dispatch(setTotalSupply(parseFloat(totalSupply).toFixed(ROUND_DECIMALS)));
     dispatch(setNetwork(network));
     dispatch(setCurrentFee(fee));
     if (isConnected()) {
@@ -47,7 +48,7 @@ const App = () => {
   
   const registerUserTokenBalance = async (account) => {
     const balance = await getUserTokenBalance(account);
-    dispatch(setUserTokenBalance(parseFloat(balance).toFixed(4)));
+    dispatch(setUserTokenBalance(parseFloat(balance).toFixed(ROUND_DECIMALS)));
   }
 
   const registerAccount = (accounts) => {
