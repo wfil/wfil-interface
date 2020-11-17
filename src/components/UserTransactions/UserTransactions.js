@@ -33,6 +33,7 @@ const UserTransactions = () => {
   const { totalSupply, account } = useSelector(state => state.web3);
   const [userTransactions, setUserTransactions] = useState([]);
   const [modalData, setModalData] = useState({ open: false });
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
     fetchUserTransactions(account, address);
@@ -50,6 +51,7 @@ const UserTransactions = () => {
     const { success, data } = await getUserTransactions(account, address);
     if (success) {
       setUserTransactions(data);
+      setLoading(false);
     }
   }
 
@@ -71,6 +73,10 @@ const UserTransactions = () => {
         <Text color="primary" fontFamily="sansSerif" fontSize={1}>Total Supply: {totalSupply} WFIL</Text>
       </Header>
       <div>
+        {loading && <Flex justifyContent="center" mt={4}><Text color="text" fontFamily="sansSerif" fontSize={1}>Loading</Text></Flex>}
+        {!loading && userTransactions.length === 0 && (
+          <Flex justifyContent="center" mt={4}><Text color="text" fontFamily="sansSerif" fontSize={1}>No recent transactions</Text></Flex>
+        )}
         {userTransactions.map(tx => (
           <TransactionItem key={tx._id} p={3} justifyContent="space-between" alignItems="center">
             <Flex alignItems="center">
