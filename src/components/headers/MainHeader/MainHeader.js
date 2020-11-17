@@ -15,9 +15,6 @@ const UpperHeader = styled.div`
   position: relative;
 `;
 
-const BottomHeader = styled(Flex)`
-  box-shadow: 5px 0 5px 0 ${({ theme }) => theme.colors.primary};
-`
 const colorStatus = (network) => {
   if (!network) return '';
   if (network.isCorrectNetwork) return 'primary';
@@ -39,7 +36,7 @@ const TIMEOUT_SHOW_NETWORK = 4000;
 
 const MainHeader = () => {
   const [showNetwork, setShowNetwork] = useState(false);
-  const { network, totalSupply, account, userBalance } = useSelector(state => state.web3)
+  const { network, account, userBalance } = useSelector(state => state.web3)
 
   useEffect(() => {
     if (network) {
@@ -75,9 +72,12 @@ const MainHeader = () => {
           <Box p={3} width={1 / 2} textAlign="right">
             {account
               ? (
-                <Pill color="green">
-                  <Text fontFamily="sansSerif" fontSize={1}>Connected: {displayAccount}</Text>
-                </Pill>
+                <Flex justifyContent="flex-end" alignItems="flex-end" flexDirection="column">
+                  <Pill color="green">
+                    <Text fontFamily="sansSerif" fontSize={1}>Connected: {displayAccount}</Text>
+                  </Pill>
+                  {parseFloat(userBalance) > 0 && <Text mt={2} color="primary" fontFamily="sansSerif" fontSize={1}>Balance: {userBalance} WFIL</Text>}
+                </Flex>
               )
               : (
                 <MetaMaskButton.Outline size="small" onClick={userConnect}>Connect with MetaMask</MetaMaskButton.Outline>
@@ -86,15 +86,6 @@ const MainHeader = () => {
           </Box>
         </Flex>
       </UpperHeader>
-      <BottomHeader justifyContent="space-between">
-        <Box  p={2} width={1 / 2} textAlign="left">
-          <Text color="primary" fontFamily="sansSerif" fontSize={1}>Total Supply: {totalSupply} WFIL</Text>
-          <Text color="primary" fontFamily="sansSerif" fontSize={1}>Your Balance: {userBalance} WFIL</Text>
-        </Box>
-        <Box  p={2} width={1 / 2} textAlign="right">
-          <Text color="primary" fontFamily="sansSerif" fontSize={1}>Current networks: Calibration - Rinkeby</Text>
-        </Box>
-      </BottomHeader>
     </>
   )
 }
