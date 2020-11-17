@@ -7,7 +7,7 @@ import AppIcon from '../Icon';
 import { friendlyAmount } from '../../helpers/filecoin';
 import { askForWrap, checkTransactionStatus } from '../../services/api';
 import Clipboard from '../../utilities/components/CopyToClipboard';
-import { getWallet } from '../Wallet/db';
+import { getWalletInfo } from '../Wallet/db';
 
 const INTERVAL_CHECK = 5000;
 const WFIL_ADDRESS = process.env.REACT_APP_FIL_WALLET;
@@ -32,9 +32,7 @@ const ROUND_DECIMALS = process.env.REACT_APP_ROUND_DECIMALS
 
 const Wrap = () => {
   const { account, currentFee } = useSelector(state => state.web3)
-  const lsWallet = getWallet();
-  const address = lsWallet?.address ?? '';
-  const filBalance = friendlyAmount(lsWallet?.balance ?? 0);
+  const { address, filBalance } = getWalletInfo();
   const [modalOpen, setModalOpen] = useState(false)
   const [txResult, setTxResult] = useState('')
   const [formData, setFormData] = useState({ amount: '', destination: '', origin: address });
@@ -117,7 +115,6 @@ const Wrap = () => {
               <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary" ml="5px">FIL</Text>
             </Flex>
           </Box>
-          <SetInputValue onClick={handleUseMaxFilValue}>max</SetInputValue>
         </Box>
         <Box position="relative" mx={4} mb={4}>
           <Text fontWeight="300" fontFamily="sansSerif" width="100%" color="primary">Filecoin Sending Address</Text>

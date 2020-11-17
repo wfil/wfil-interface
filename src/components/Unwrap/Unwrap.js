@@ -5,7 +5,7 @@ import { Flex, Box, Card, Heading, Text, Input, Button, Modal, Loader } from 'ri
 
 import { checkTransactionStatus, askForUnwrap } from '../../services/api';
 import { sendUnwrapTransaction } from '../../services/web3';
-import { getWallet } from '../Wallet/db';
+import { getWalletInfo } from '../Wallet/db';
 import { ReactComponent as Logo } from '../Icon/logo.svg';
 
 const INTERVAL_CHECK = 5000;
@@ -31,8 +31,7 @@ const SetInputValue = styled.a`
 const ROUND_DECIMALS = process.env.REACT_APP_ROUND_DECIMALS
 
 const Unwrap = () => {
-  const lsWallet = getWallet();
-  const address = lsWallet?.address ?? '';
+  const { address } = getWalletInfo();
   const [modalOpen, setModalOpen] = useState(false)
   const [formData, setFormData] = useState({ amount: '', destination: address});
   const [success, setSuccess] = useState(false);
