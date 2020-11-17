@@ -8,7 +8,6 @@ import Unwrap from '../components/Unwrap';
 import { ReactComponent as Logo } from '../components/Icon/logo.svg';
 import Icon from '../components/Icon';
 import UserTransactions from '../components/UserTransactions';
-import AppLink from '../components/AppLink';
 
 const Tab = styled(Box)`
   cursor: pointer;
@@ -78,10 +77,6 @@ const Home = () => {
       <Flex flexDirection="column" justifyContent="center" alignItems="center">
         <Text mt="10px" fontFamily="sansSerif" fontSize={1} mb="20px">Wrapped Filecoin is currently in beta. Please don't use Mainnet FIL on this project.</Text>
         <Text color="primary" fontFamily="sansSerif" fontSize={1}>Current networks: Calibration - Rinkeby</Text>
-        <Text color="primary" fontFamily="sansSerif" fontSize={1}>
-          <span>Do you need some testing FIL?</span>&nbsp;
-          <AppLink href="https://faucet.calibration.fildev.network/funds.html" target="_blank" rel="noopener noreferrer">Here is a faucet</AppLink>
-        </Text>
       </Flex>
     </MainLayout>
   );

@@ -5,6 +5,7 @@ import { Flex, Box, Heading, Button, Text, Field, Input, Icon } from 'rimble-ui'
 import { createWallet, getBalance, sendFil } from '../../services/api';
 import Clipboard from '../../utilities/components/CopyToClipboard';
 import { autoRound } from '../../helpers/filecoin';
+import AppLink from '../AppLink';
 
 import { getWallet, saveWallet } from './db';
 
@@ -37,7 +38,7 @@ const WalletBoddy = styled.div`
   overflow: hidden;
   transition: max-height 0.3s;
   background-color: white;
-  max-height: ${({isOpen}) => isOpen ? '500px' : 0};
+  max-height: ${({isOpen}) => isOpen ? '550px' : 0};
 `;
 
 const WalletSection = styled(Box)`
@@ -74,7 +75,6 @@ const Wallet = () => {
 
   useEffect(() => {
     if (wallet) {
-      updateWalletBalance(wallet.address);
       intervalHandler = setInterval(() => updateWalletBalance(wallet), CHECK_BALANCE_INTERVAL);
     }
     return () => intervalHandler && clearInterval(intervalHandler);
@@ -156,7 +156,7 @@ const Wallet = () => {
               <WalletSection p={3}>
                 <Heading Heading as={"h2"} mb={1} fontFamily="sansSerif">Send FIL</Heading>
                 {sendFilSuccess && <Text textAlign="center" fontFamily="sansSerif" fontSize={1}>Successfully sent!</Text>}
-                <Box px={4} mb={2}>
+                <Box mb={2}>
                   <Field label="Destination" fontFamily="sansSerif" width="100%" color="primary">
                     <Input
                       name="destination"
@@ -169,7 +169,7 @@ const Wallet = () => {
                     />
                   </Field>
                 </Box>
-                <Box px={4} mb={2}>
+                <Box mb={2}>
                   <Field label="Amount" fontFamily="sansSerif" width="100%" color="primary">
                     <Input
                       name="amount"
@@ -182,10 +182,16 @@ const Wallet = () => {
                     />
                   </Field>
                 </Box>
-                <Box px={4}>
+                <Box>
                   <Button onClick={handleSendFil} width="100%">SEND</Button>
                 </Box>
-                <Box px={4} mb={2} mt={4}>
+                <Box mb={2} mt={4}>
+                <Text color="primary" fontFamily="sansSerif" fontSize={1}>
+                  <span>Do you need test FIL?</span>&nbsp;
+                  <AppLink href="https://faucet.calibration.fildev.network/funds.html" target="_blank" rel="noopener noreferrer">Faucet</AppLink>
+                </Text>
+                </Box>
+                <Box mb={2} mt={4}>
                   <LinkAction textAlign="center" fontFamily="sansSerif" fontSize={1} onClick={handleResetWallet}>reset wallet</LinkAction>
                 </Box>
               </WalletSection>
