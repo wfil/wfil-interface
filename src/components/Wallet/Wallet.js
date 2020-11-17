@@ -116,7 +116,7 @@ const Wallet = () => {
                   <Text fontFamily="sansSerif" fontSize={1}>Connected: {wallet.address}</Text>
                 </WalletHeaderAddress>
                 <Box flex="1 0 30%">
-                  <Text textAlign="right" fontFamily="sansSerif" fontSize={1}>{autoRound(wallet.balance || 0)}&nbsp;FIL</Text>
+                  <Text textAlign="right" fontFamily="sansSerif" fontSize={1}>{autoRound(wallet.balance || 0, 8)}&nbsp;FIL</Text>
                 </Box>
               </Flex>
             </WalletHeader>
