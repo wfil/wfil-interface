@@ -25,6 +25,11 @@ const TransactionItem = styled(Flex)`
   }
 `;
 
+const TransactionList = styled.div`
+  max-height: 520px;
+  overflow:scroll;
+`
+
 const INTERVAL_CHECK = 5000;
 let intervalHandler = null;
 
@@ -72,7 +77,7 @@ const UserTransactions = () => {
         <Heading as="h3" fontFamily="sansSerif" fontWeight="300" color="primary">Recent Transactions</Heading>
         <Text color="primary" fontFamily="sansSerif" fontSize={1}>Total Supply: {totalSupply} WFIL</Text>
       </Header>
-      <div>
+      <TransactionList>
         {loading && <Flex justifyContent="center" mt={4}><Text color="text" fontFamily="sansSerif" fontSize={1}>Loading</Text></Flex>}
         {!loading && userTransactions.length === 0 && (
           <Flex justifyContent="center" mt={4}><Text color="text" fontFamily="sansSerif" fontSize={1}>No recent transactions</Text></Flex>
@@ -113,7 +118,7 @@ const UserTransactions = () => {
             </Flex>
           </TransactionItem>
         ))}
-      </div>
+      </TransactionList>
       <Modal isOpen={modalData.open}>
         <WrapSendFil amount={modalData.amount} onCloseModal={closeTransactionModal} />
       </Modal>
