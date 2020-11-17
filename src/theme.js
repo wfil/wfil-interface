@@ -51,5 +51,6 @@ export default {
     warning: '#ffc107',
     danger: '#dc3545',
     info: '#07c',
-  }
+  },
+  breakpoints: ['64em', '70em'],
 }
