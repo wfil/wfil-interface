@@ -59,7 +59,7 @@ export async function askForUnwrap({origin, amount, destination}) {
     console.log("askForUnwrap -> result", result);
     return parseResponse(true, { id: result.data.data });
   } catch (error) {
-    console.log("askForWrap -> error", error)
+    console.log("askForUnwrap -> error", error)
     return parseResponse(false); 
   }
 }
@@ -70,21 +70,18 @@ export async function checkTransactionStatus(id) {
     console.log("checkTransactionStatus -> result", result);
     return parseResponse(true, { ...result.data.data });
   } catch (error) {
-    console.log("askForWrap -> error", error)
+    console.log("checkTransactionStatus -> error", error)
     return parseResponse(false); 
   }
 }
 
-export async function checkEthTransaction({amount, destination}) {
+export async function getUserTransactions(ethAddress, filAddress) {
   try {
-    return parseResponse(true, { tx: '0x467ad41d3df2441bde10f0f5e4c7f52f94e5d2abe105ec47644f5cf4e725032a' });
-    // const query = `amount=${amount}&destination=${destination}`;
-    // const result = await axios.get(`${BASE_URL}/unwrap?${query}`);
-    // console.log("checkEthTransaction -> result", result);
-    // const { tx } = result.data;
-    // return parseResponse(true, { tx });
+    const result = await axios.get(`${BASE_URL}/transaction?ethAddress=${ethAddress}&filAddress=${filAddress}`);
+    console.log("getUserTransactions -> result", result);
+    return parseResponse(true, result.data.data);
   } catch (error) {
-    console.log("checkEthTransaction -> error", error)
+    console.log("getUserTransactions -> error", error)
     return parseResponse(false); 
   }
 }
