@@ -70,7 +70,7 @@ const Home = () => {
           </Flex>
           {tab === 'wrap' ? <Wrap /> : <Unwrap />}
         </Card>
-        <Card width={['100%', '68%']} mx={"auto"} my={5} p={0}>
+        <Card width={['100%', '68%']} mx={"auto"} my={5} p={0} style={{ 'max-height': '580px', 'overflow': 'scroll'}}>
           <UserTransactions />
         </Card>
       </Flex>

@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Flex, Box, Card, Heading, Text, Icon, Input, Button, Modal, Loader } from 'rimble-ui';
+import { Flex, Box, Text, Input, Button, Modal } from 'rimble-ui';
 
 import AppIcon from '../Icon';
-import { friendlyAmount } from '../../helpers/filecoin';
-import { askForWrap, checkTransactionStatus } from '../../services/api';
-import Clipboard from '../../utilities/components/CopyToClipboard';
+import { askForWrap } from '../../services/api';
 import { getWalletInfo } from '../Wallet/db';
-
-const INTERVAL_CHECK = 5000;
-const WFIL_ADDRESS = process.env.REACT_APP_FIL_WALLET;
-let intervalHandler = null;
-
-const AppLink = styled.a`
-  color: ${props => props.theme.colors.primary};
-`;
+import WrapSendFil from '../WrapSendFil';
 
 const SetInputValue = styled.a`
   position: absolute;
@@ -32,9 +23,8 @@ const ROUND_DECIMALS = process.env.REACT_APP_ROUND_DECIMALS
 
 const Wrap = () => {
   const { account, currentFee } = useSelector(state => state.web3)
-  const { address, filBalance } = getWalletInfo();
+  const { address } = getWalletInfo();
   const [modalOpen, setModalOpen] = useState(false)
-  const [txResult, setTxResult] = useState('')
   const [formData, setFormData] = useState({ amount: '', destination: '', origin: address });
   const [feeAmount, setFeeAmount] = useState(0);
 
@@ -42,10 +32,6 @@ const Wrap = () => {
     const feeAbs = currentFee / 100;
     setFeeAmount((feeAbs * formData.amount).toFixed(ROUND_DECIMALS));
   }, [formData.amount]);
-
-  useEffect(() => {
-    return () => intervalHandler && clearInterval(intervalHandler);
-  }, []);
 
   const onWrapValueChange = ({ target }) => {
     const { name, value } = target;
@@ -64,11 +50,6 @@ const Wrap = () => {
     onWrapValueChange({ target: { name: 'origin', value: address }});
   }
 
-  const handleUseMaxFilValue = () => {
-    onWrapValueChange({ target: { name: 'amount', value: filBalance }});
-  }
-
-
   const handleWrap = async () => {
     const { amount, destination, origin } = formData;
     console.log("WRAPPPP!!", amount, destination, origin)
@@ -76,24 +57,9 @@ const Wrap = () => {
       setModalOpen(true)
       const filAmount = amount.replace(',', '.');
       const { success, data } = await askForWrap({ origin, amount: filAmount, destination });
-      const transactionId = data && data.id ? data.id : null;
-
-      if (success && transactionId) {
-        intervalHandler && clearInterval(intervalHandler);
-        intervalHandler = setInterval(async() => {
-          const { success: statusSuccess, data: dataTransaction } = await checkTransactionStatus(transactionId);
-          console.log("intervalHandler -> success", statusSuccess, dataTransaction)
-          if (statusSuccess && dataTransaction && dataTransaction.status === 'success') {
-            setTxResult(dataTransaction.txHash);
-            clearInterval(intervalHandler);
-          }
-        }, INTERVAL_CHECK);
-      }
-
+      // TODO: inform error to user
     }
   }
-
-  const closeModal = () => setModalOpen(false);
 
   return (
     <>
@@ -155,91 +121,7 @@ const Wrap = () => {
         </Box>
       </Flex>
       <Modal isOpen={modalOpen}>
-        <Card width={"420px"} p={0}>
-          <Button.Text
-            icononly
-            icon={"Close"}
-            color={"moon-gray"}
-            position={"absolute"}
-            top={0}
-            right={0}
-            mt={3}
-            mr={3}
-            onClick={closeModal}
-          />
-
-          <Box p={4} mb={3}>
-            <Heading.h3>Wrapping FIL into WFIL</Heading.h3>
-            {txResult 
-              ? (
-                <Text mt={4}>
-                  <span>Success! </span>
-                  <AppLink href={`https://rinkeby.etherscan.io/tx/${txResult}`} target="_blank" rel="noopener noreferrer">Check transaction</AppLink>
-                </Text>
-              )
-              : (
-              <>
-                <Text mt={4}>Send {formData.amount}FIL to:</Text>
-                <Clipboard text={WFIL_ADDRESS}>
-                  {isCopied => (
-                    <Box
-                      color={'inherit'}
-                      position={'relative'}
-                      display={'flex'}
-                      alignItems={'center'}
-                    >
-                      <Input
-                        readOnly
-                        value={WFIL_ADDRESS}
-                        width={1}
-                        p={'auto'}
-                        pl={3}
-                        pr={'5rem'}
-                        fontWeight={3}
-                      />
-                      <Button
-                        size={'small'}
-                        width={'4rem'}
-                        mx={2}
-                        position={'absolute'}
-                        right={0}
-                      >
-                        {!isCopied ? 'Copy' : <Icon name={'Check'} />}
-                      </Button>
-                    </Box>
-                  )}
-                </Clipboard>
-              </>
-            )}
-            
-          </Box>
-
-          <Flex
-            px={4}
-            py={3}
-            borderTop={1}
-            borderColor={"#E8E8E8"}
-            justifyContent="space-between"
-          >
-            {!txResult && <Button.Outline onClick={closeModal}>Cancel</Button.Outline>}
-
-            {txResult 
-             ? (
-              <Button onClick={closeModal} width="100%">Close</Button>
-             )
-             : (
-              <Flex
-                px={4}
-                py={3}
-                justifyContent="flex-end"
-                alignItems="center"
-              >
-                <Loader />
-                <Text ml={1}>Waiting</Text>
-              </Flex>
-            )}
-          </Flex>
-        </Card>
+        <WrapSendFil amount={formData.amount} onCloseModal={() => setModalOpen(false)} />
       </Modal>
     </>
   )

@@ -15,7 +15,7 @@ const Filecoin = ({ width = '50px', height = '50px' }) => {
       </defs>
       <mask maskUnits="userSpaceOnUse" x="0" y="0" width="40" height="40" id="b-logo_1">
           <g filter="url(#a-logo)">
-              <path id="a-logo_1" class="st1-logo" d="M0 0h40v40H0V0z" />
+              <path id="a-logo_1" className="st1-logo" d="M0 0h40v40H0V0z" />
           </g>
       </mask>
       <path d="M20 40C9 40 0 31 0 19.9.1 8.9 9-.1 20.1 0 31.1.1 40 9 40 20.2 39.9 31.1 31 40 20 40" mask="url(#b-logo_1)" fillRule="evenodd" clipRule="evenodd" fill="#0090ff" />

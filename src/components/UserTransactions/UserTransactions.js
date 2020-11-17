@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { space } from 'styled-system';
-import { Flex, Box, Heading, Text, Pill } from 'rimble-ui';
+import { Flex, Box, Heading, Text, Pill, Modal } from 'rimble-ui';
 
 import { getWalletInfo } from '../Wallet/db';
 import { getUserTransactions } from '../../services/api';
 import { autoRound } from '../../helpers/filecoin';
 import Icon from '../Icon';
 import { ReactComponent as Logo } from '../Icon/logo.svg';
+import WrapSendFil from '../WrapSendFil';
+import AppLink from '../AppLink';
 
 const Header = styled(Flex)`
   ${space};
@@ -23,14 +25,26 @@ const TransactionItem = styled(Flex)`
   }
 `;
 
-const TransactionAmount = styled(Flex)`
-
-`;
+const INTERVAL_CHECK = 5000;
+let intervalHandler = null;
 
 const UserTransactions = () => {
   const { address } = getWalletInfo();
   const { totalSupply, account } = useSelector(state => state.web3);
   const [userTransactions, setUserTransactions] = useState([]);
+  const [modalData, setModalData] = useState({ open: false });
+  
+  useEffect(() => {
+    fetchUserTransactions(account, address);
+
+    intervalHandler && clearInterval(intervalHandler);
+    intervalHandler = setInterval(async() => {
+      fetchUserTransactions(account, address);
+    }, INTERVAL_CHECK);
+    
+    return () => intervalHandler && clearInterval(intervalHandler);
+  }, [account, address]);
+
 
   const fetchUserTransactions = async (account, address) => {
     const { success, data } = await getUserTransactions(account, address);
@@ -39,9 +53,16 @@ const UserTransactions = () => {
     }
   }
 
-  useEffect(() => {
-    fetchUserTransactions(account, address);
-  }, [account, address]);
+  const openTransactionModal = ({ amount }) => {
+    setModalData({
+      amount: autoRound(amount),
+      open: true
+    })
+  }
+
+  const closeTransactionModal = () => {
+    setModalData({ open: false });
+  }
 
   return (
     <>
@@ -51,8 +72,8 @@ const UserTransactions = () => {
       </Header>
       <div>
         {userTransactions.map(tx => (
-          <TransactionItem p={3} justifyContent="space-between" alignItems="center">
-            <TransactionAmount alignItems="center">
+          <TransactionItem key={tx._id} p={3} justifyContent="space-between" alignItems="center">
+            <Flex alignItems="center">
               {tx.type === 'wrap'
                 ? <Box><Logo style={{ width: '35px', height: '35px' }} /></Box>
                 : <Box mx="6px"><Icon name="filecoin" width="25px" height="25px" /></Box>
@@ -66,8 +87,15 @@ const UserTransactions = () => {
                     <Flex alignItems="flex-start">&nbsp;WFIL&nbsp;<Icon name="rightArrow"/>&nbsp;FIL&nbsp;</Flex>
                   </Text>)
               }
-            </TransactionAmount>
-            <div>
+            </Flex>
+            <Flex justifyContent="flex-end" alignItems="center">
+              {tx.type === 'wrap' && tx.status === 'pending' && (
+                <Box mr={4}>
+                  <AppLink href='#' onClick={() => openTransactionModal(tx)}>
+                    <Text fontFamily="sansSerif" fontSize={1} color="primary">Instructions</Text>
+                  </AppLink>
+                </Box>
+              )}
               {tx.status === 'success'
                 ? (<Pill color="green">
                     <Text fontFamily="sansSerif" fontSize={1}>Completed</Text>
@@ -76,10 +104,13 @@ const UserTransactions = () => {
                     <Text fontFamily="sansSerif" fontSize={1}>Pending</Text>
                   </Pill>)}
               
-            </div>
+            </Flex>
           </TransactionItem>
         ))}
       </div>
+      <Modal isOpen={modalData.open}>
+        <WrapSendFil amount={modalData.amount} onCloseModal={closeTransactionModal} />
+      </Modal>
     </>
   )
 }
