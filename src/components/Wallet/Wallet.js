@@ -4,7 +4,7 @@ import { Flex, Box, Heading, Button, Text, Field, Input, Icon } from 'rimble-ui'
 
 import { createWallet, getBalance, sendFil } from '../../services/api';
 import Clipboard from '../../utilities/components/CopyToClipboard';
-import { friendlyAmount } from '../../helpers/filecoin';
+import { autoRound } from '../../helpers/filecoin';
 
 import { getWallet, saveWallet } from './db';
 
@@ -116,7 +116,7 @@ const Wallet = () => {
                   <Text fontFamily="sansSerif" fontSize={1}>Connected: {wallet.address}</Text>
                 </WalletHeaderAddress>
                 <Box flex="1 0 30%">
-                  <Text textAlign="right" fontFamily="sansSerif" fontSize={1}>{friendlyAmount(wallet.balance || 0)}&nbsp;FIL</Text>
+                  <Text textAlign="right" fontFamily="sansSerif" fontSize={1}>{autoRound(wallet.balance || 0)}&nbsp;FIL</Text>
                 </Box>
               </Flex>
             </WalletHeader>
