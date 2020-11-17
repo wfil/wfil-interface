@@ -6,6 +6,7 @@ export default {
     text: '#3F3D4B',
     'moon-gray': '#ccc',
     white: '#fff',
+    lightGrey: '#ececec',
 
     background: '#fff',
     blue: '#0090ff',
