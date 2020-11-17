@@ -185,13 +185,13 @@ const Wallet = () => {
                 <Box>
                   <Button onClick={handleSendFil} width="100%">SEND</Button>
                 </Box>
-                <Box mb={2} mt={4}>
-                <Text color="primary" fontFamily="sansSerif" fontSize={1}>
-                  <span>Do you need test FIL?</span>&nbsp;
-                  <AppLink href="https://faucet.calibration.fildev.network/funds.html" target="_blank" rel="noopener noreferrer">Faucet</AppLink>
-                </Text>
+                <Box mt={4}>
+                  <Text color="primary" fontFamily="sansSerif" fontSize={1}>
+                    <span>Do you need test FIL?</span>&nbsp;
+                    <AppLink href="https://faucet.calibration.fildev.network/funds.html" target="_blank" rel="noopener noreferrer">Faucet</AppLink>
+                  </Text>
                 </Box>
-                <Box mb={2} mt={4}>
+                <Box mb={2} mt={3}>
                   <LinkAction textAlign="center" fontFamily="sansSerif" fontSize={1} onClick={handleResetWallet}>reset wallet</LinkAction>
                 </Box>
               </WalletSection>
