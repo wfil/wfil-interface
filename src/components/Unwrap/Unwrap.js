@@ -175,23 +175,7 @@ const Unwrap = () => {
             borderColor={"#E8E8E8"}
             justifyContent="space-between"
           >
-            {success 
-              ? (<Button onClick={() => setModalOpen(false)} width="100%">Close</Button>) 
-              : (
-                <>
-                  <Button.Outline onClick={() => setModalOpen(false)}>Cancel</Button.Outline>
-                  <Flex
-                    px={4}
-                    py={3}
-                    justifyContent="flex-end"
-                    alignItems="center"
-                  >
-                    <Loader />
-                    <Text ml={1}>Waiting</Text>
-                  </Flex>
-                </>
-              )}
-            
+            <Button onClick={() => setModalOpen(false)} width="100%">Continue</Button>
           </Flex>
         </Card>
       </Modal>
