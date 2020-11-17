@@ -100,7 +100,7 @@ export const setupEventHandlers = ({ onNetworkChanged, onAccountsChanged }) => {
 }
 
 export const isConnected = () => {
-  return Boolean(window.ethereum.selectedAddress);
+  return Boolean(window.ethereum && window.ethereum.selectedAddress);
 }
 
 export const getUserAccount = () => {
