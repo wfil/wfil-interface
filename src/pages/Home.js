@@ -7,6 +7,7 @@ import Wrap from '../components/Wrap';
 import Unwrap from '../components/Unwrap';
 import { ReactComponent as Logo } from '../components/Icon/logo.svg';
 import Icon from '../components/Icon';
+import UserTransactions from '../components/UserTransactions';
 
 const Tab = styled(Box)`
   cursor: pointer;
@@ -32,45 +33,51 @@ const Home = () => {
 
   return (
     <MainLayout>
-      <Flex justifyContent="center">
-        <Text mt="10px" fontFamily="sansSerif" fontSize={1}>Wrapped Filecoin is currently in beta. Please don't use Mainnet FIL on this project.</Text>
+      <Flex flexDirection={['column', 'row']} justifyContent="space-between" width="98%" maxWidth={['98%', '1200px']} mx="auto">
+        <Card width={['100%', '30%']} mx={"auto"} my={5} p={0}>
+          <Flex>
+            <TabLeft
+              p={3}
+              width={1 / 2}
+              color="primary"
+              active={tab === 'wrap'}
+              onClick={() => setTab('wrap')}
+            >
+              <Heading as="h3" fontFamily="sansSerif" fontWeight="300">
+                <Flex justifyContent="center" alignItems="center">
+                  <Logo style={{ width: '35px', height: '35px' }} />
+                  <Box ml="0.4rem">GET WFIL</Box>
+                </Flex>
+              </Heading>
+            </TabLeft>
+            <VLine />
+            <TabRight
+              px={3}
+              pb={3}
+              pt="18px"
+              width={1 / 2}
+              color="primary"
+              active={tab === 'unwrap'}
+              onClick={() => setTab('unwrap')}
+            >
+              <Heading as="h3" fontFamily="sansSerif" fontWeight="300">
+                <Flex justifyContent="center" alignItems="center">
+                  <Icon name="filecoin" width="30px" height="30px" />
+                  <Box ml="0.4rem">GET FIL</Box>
+                </Flex>
+              </Heading>
+            </TabRight>
+          </Flex>
+          {tab === 'wrap' ? <Wrap /> : <Unwrap />}
+        </Card>
+        <Card width={['100%', '68%']} mx={"auto"} my={5} p={0}>
+          <UserTransactions />
+        </Card>
       </Flex>
-      <Card width={"auto"} maxWidth={['98%', '500px']} mx={"auto"} my={5} p={0}>
-        <Flex>
-          <TabLeft
-            p={3}
-            width={1 / 2}
-            color="primary"
-            active={tab === 'wrap'}
-            onClick={() => setTab('wrap')}
-          >
-            <Heading as="h3" fontFamily="sansSerif" fontWeight="300">
-              <Flex justifyContent="center" alignItems="center">
-                <Logo style={{ width: '35px', height: '35px' }} />
-                <Box ml="0.4rem">GET WFIL</Box>
-              </Flex>
-            </Heading>
-          </TabLeft>
-          <VLine />
-          <TabRight
-            px={3}
-            pb={3}
-            pt="18px"
-            width={1 / 2}
-            color="primary"
-            active={tab === 'unwrap'}
-            onClick={() => setTab('unwrap')}
-          >
-            <Heading as="h3" fontFamily="sansSerif" fontWeight="300">
-              <Flex justifyContent="center" alignItems="center">
-                <Icon name="filecoin" width="30px" height="30px" />
-                <Box ml="0.4rem">GET FIL</Box>
-              </Flex>
-            </Heading>
-          </TabRight>
-        </Flex>
-        {tab === 'wrap' ? <Wrap /> : <Unwrap />}
-      </Card>
+      <Flex flexDirection="column" justifyContent="center" alignItems="center">
+        <Text mt="10px" fontFamily="sansSerif" fontSize={1} mb="20px">Wrapped Filecoin is currently in beta. Please don't use Mainnet FIL on this project.</Text>
+        <Text color="primary" fontFamily="sansSerif" fontSize={1}>Current networks: Calibration - Rinkeby</Text>
+      </Flex>
     </MainLayout>
   );
 }
