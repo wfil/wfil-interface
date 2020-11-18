@@ -8,6 +8,9 @@ import Unwrap from '../components/Unwrap';
 import { ReactComponent as Logo } from '../components/Icon/logo.svg';
 import Icon from '../components/Icon';
 import UserTransactions from '../components/UserTransactions';
+import AppLink from '../components/AppLink';
+
+const CONTRACT_ADDRESS = process.env.REACT_APP_WFIL_CONTRACT_ADDRESS;
 
 const Tab = styled(Box)`
   cursor: pointer;
@@ -77,6 +80,9 @@ const Home = () => {
       <Flex flexDirection="column" justifyContent="center" alignItems="center">
         <Text mt="10px" fontFamily="sansSerif" fontSize={1} mb="20px">Wrapped Filecoin is currently in beta. Please don't use Mainnet FIL on this project.</Text>
         <Text color="primary" fontFamily="sansSerif" fontSize={1}>Current networks: Calibration - Rinkeby</Text>
+        <Text mt="20px" color="primary" fontFamily="sansSerif" fontSize={1}>
+          <AppLink href={`https://rinkeby.etherscan.io/address/${CONTRACT_ADDRESS}#code`} target="_blank" rel="noopener noreferrer">View Smart Contract on Etherscan</AppLink>
+        </Text>
       </Flex>
     </MainLayout>
   );
