@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Flex, Box, Heading, Button, Text, Field, Input, Icon } from 'rimble-ui';
 
-import { createWallet, getBalance, sendFil } from '../../services/api';
+import { createWallet, getBalance, sendFil } from '../../services/wallet';
 import Clipboard from '../../utilities/components/CopyToClipboard';
 import { autoRound } from '../../helpers/filecoin';
 import AppLink from '../AppLink';
