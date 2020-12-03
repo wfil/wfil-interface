@@ -5,6 +5,7 @@ import {theme} from 'rimble-ui'
 
 import { Reset } from './components/ResetStyles';
 import Wallet from './components/Wallet';
+import ComingSoon from './components/ComingSoon';
 import Routes from './Routes';
 import customTheme from './theme';
 import {
@@ -68,8 +69,9 @@ const App = () => {
   return (
     <ThemeProvider theme={appTheme}>
       <Reset />
-      <Routes /> 
-      <Wallet />
+      <ComingSoon/>
+      {/* <Routes /> 
+      <Wallet /> */}
     </ThemeProvider>
   );
 }
