@@ -23,8 +23,8 @@ const ComingSoon = () => {
         Coming Soon...
       </Heading>
       <Text fontFamily="sansSerif" fontWeight="300">
-        <span>Stay tunned for Mainnet launch at</span>&nbsp;
-        <AppLink href="https://twitter.com/wrappedfil" target="_blank" rel="noopener noreferrer">@wrappedfil</AppLink>
+        <span>Stay Tuned for Mainnet Launch</span>&nbsp;
+        <AppLink href="https://twitter.com/wrappedfil" target="_blank" rel="noopener noreferrer">@WrappedFIL</AppLink>
       </Text>
     </Wrapper>
   )
