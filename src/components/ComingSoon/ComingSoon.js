@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Box, Heading, Text } from 'rimble-ui';
+import { Button, Heading, Text } from 'rimble-ui';
 
 import AppLink from '../AppLink';
 
@@ -20,11 +20,11 @@ const ComingSoon = () => {
   return (
     <Wrapper>
       <Heading mb="30px" as="h1" fontFamily="sansSerif" fontWeight="300" textAlign="center" fontSize="3rem">
-        Coming Soon...
+        WFIL Bistrot ☕️&nbsp;🥐
       </Heading>
+      <Text mb="20px" fontFamily="sansSerif" fontWeight="300">Coming soon...</Text>
       <Text fontFamily="sansSerif" fontWeight="300">
-        <span>Stay Tuned for Mainnet Launch</span>&nbsp;
-        <AppLink href="https://twitter.com/wrappedfil" target="_blank" rel="noopener noreferrer">@WrappedFIL</AppLink>
+        <Button as="a" href="https://wfil.substack.com/welcome" target="\_blank" width="100%">Subscribe for News! 🚀</Button>
       </Text>
     </Wrapper>
   )
